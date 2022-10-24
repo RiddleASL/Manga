@@ -1,3 +1,30 @@
 h1{
     font-size: 4rem;
 }
+
+h2{
+    font-size: 3rem;
+}
+
+.author{
+    font-size: .8rem;
+    font-weight: bold;
+    text-decoration: underline;
+    opacity: 50%;
+}
+
+.description{
+    font-size: 1.1rem;
+}
+
+.title{
+    background-color: rgb(216, 255, 176);
+    width: fit-content;
+    padding: 1rem 3rem 1rem 3rem;
+    border: .3rem solid rgb(195, 238, 152);
+    border-radius: 10px;
+}
+.tit{
+    display: flex;
+    justify-content: center;
+}
