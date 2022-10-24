@@ -23,6 +23,7 @@ return new class extends Migration
             $table->longText('description');
             $table->string('manga_image');
             $table->timestamps();
+            $table->foreignId('user_id')->constrained();
         });
     }
 
