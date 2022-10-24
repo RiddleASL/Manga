@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Manga;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 class MangaController extends Controller
 {
@@ -16,7 +17,7 @@ class MangaController extends Controller
     public function index()
     {
         //
-        $mangas = Manga::where('user_id', Auth::id())->latest('updated_at')->paginate(1);
+        $mangas = Manga::where('user_id', Auth::id())->latest('updated_at')->paginate(5);
         return view('mangas.index')->with('mangas', $mangas);
     }
 
@@ -28,6 +29,7 @@ class MangaController extends Controller
     public function create()
     {
         //
+        return view('mangas.create');
     }
 
     /**
@@ -39,6 +41,28 @@ class MangaController extends Controller
     public function store(Request $request)
     {
         //
+        $request->validate([
+            'title'=>'required|max:120',
+            'description'=>'required',
+            'author'=>'required',
+            'created_at'=>'required',
+            'updated_at'=>'nullable',
+            'genre' => 'required',
+            'chapters' => 'required',
+            'user_id'=> 'nullable'
+        ]);
+
+        Manga::create([
+            'title' => $request->title,
+            'author'=>$request->author,
+            'description' => $request->description,
+            'created_at'=> $request->created_at,
+            'genre' => $request->genre,
+            'chapters' => $request->chapters,
+            'user_id' => Auth::id()
+        ]);
+
+        return to_route('mangas.index');
     }
 
     /**
@@ -50,6 +74,7 @@ class MangaController extends Controller
     public function show($id)
     {
         //
+
     }
 
     /**
