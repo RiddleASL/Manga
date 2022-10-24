@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\MangaController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,5 +21,7 @@ Route::get('/', function () {
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::resource('/mangas', MangaController::class)->middleware(['auth']);
 
 require __DIR__.'/auth.php';
