@@ -49,8 +49,15 @@ class MangaController extends Controller
             'updated_at'=>'nullable',
             'genre' => 'required',
             'chapters' => 'required',
-            'user_id'=> 'nullable'
+            'user_id'=> 'nullable',
+            'manga_image'=> 'file|image'
         ]);
+
+        $manga_image = $request->file('manga_image');
+        $extension = $manga_image->getClientOriginalExtension();
+        $filename = date("Y-m-d-His") . '_' . $request->input('title') . '.' . $extension;
+
+        $path = $manga_image->storeAs('public/images', $filename);
 
         Manga::create([
             'title' => $request->title,
@@ -59,6 +66,7 @@ class MangaController extends Controller
             'created_at'=> $request->created_at,
             'genre' => $request->genre,
             'chapters' => $request->chapters,
+            'manga_image' => $filename,
             'user_id' => Auth::id()
         ]);
 
@@ -71,10 +79,10 @@ class MangaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Manga $manga)
     {
         //
-
+        return view('mangas.show')->with('manga', $manga);
     }
 
     /**
@@ -83,9 +91,10 @@ class MangaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Manga $manga)
     {
         //
+        return view('mangas.edit')->with('manga', $manga);
     }
 
     /**
@@ -95,9 +104,40 @@ class MangaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Manga $manga)
     {
         //
+        //
+        $request->validate([
+            'title'=>'required|max:120',
+            'description'=>'required',
+            'author'=>'required',
+            'created_at'=>'required',
+            'updated_at'=>'nullable',
+            'genre' => 'required',
+            'chapters' => 'required',
+            'user_id'=> 'nullable',
+            'manga_image'=> 'file|image'
+        ]);
+
+        $manga_image = $request->file('manga_image');
+        $extension = $manga_image->getClientOriginalExtension();
+        $filename = date("Y-m-d-His") . '_' . $request->input('title') . '.' . $extension;
+
+        $path = $manga_image->storeAs('public/images', $filename);
+
+        Manga::create([
+            'title' => $request->title,
+            'author'=>$request->author,
+            'description' => $request->description,
+            'created_at'=> $request->created_at,
+            'genre' => $request->genre,
+            'chapters' => $request->chapters,
+            'manga_image' => $filename,
+            'user_id' => Auth::id()
+        ]);
+
+        return to_route('mangas.show', $manga)->with('success', 'Book updated successfully');
     }
 
     /**
