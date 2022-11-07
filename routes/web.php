@@ -22,6 +22,8 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
+
+Route::get('/mangas/search', [MangaController::class, 'search']);
 Route::resource('/mangas', MangaController::class)->middleware(['auth']);
 
 require __DIR__.'/auth.php';

@@ -11,12 +11,5 @@ class Manga extends Model
 
     protected $guarded = [];
 
-    protected $fillable = [
-        'title',
-        'description',
-        'author',
-        'genre',
-        'chapters',
-        'manga_image'
-    ];
+    
 }

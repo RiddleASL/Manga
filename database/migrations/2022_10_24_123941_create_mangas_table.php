@@ -18,7 +18,6 @@ return new class extends Migration
             $table->string('title');
             $table->string('author');
             $table->string('genre');
-            $table->date('release_date');
             $table->integer('chapters');
             $table->longText('description');
             $table->string('manga_image');

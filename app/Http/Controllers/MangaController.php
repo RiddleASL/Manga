@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Manga;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Mockery\Undefined;
 
@@ -153,5 +154,12 @@ class MangaController extends Controller
         //
         $manga->delete();
         return to_route('mangas.index');
+    }
+
+    public function search($search){
+        $mangas = DB::table('mangas')
+        ->select('mangas.*')
+        ->where('title', 'like', '%' . $search . '%');
+        return view('mangas.index')->with('mangas', $mangas);
     }
 }
