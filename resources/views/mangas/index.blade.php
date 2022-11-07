@@ -21,7 +21,7 @@
                     <img src="{{ asset('storage/images/' . $manga->manga_image) }}" width="400">
                     <p class="description">
                         {{ Str::limit($manga->description, 400) }}
-                    </p>
+                    </p>    
                     <p>{{ $manga->genre }}</p>
                     <span class="block mt-4 text-sm opacity-70">Updated: {{ $manga->updated_at->diffForHumans()}}</span>
                 </div>

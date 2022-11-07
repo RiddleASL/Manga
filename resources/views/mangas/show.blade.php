@@ -11,7 +11,12 @@
 
     <div class="py-12">
         <div class="max-w-7x1 mx-auto sm:px-6 lg:px-8">
-            <a href="{{ route('mangas.edit', $manga->id) }}" class="btn-link btn-lg mb-2">Edit</a>
+            <a href="{{ route('mangas.edit', $manga) }}" class="btn-link btn-lg mb-2">Edit</a>
+            <form action="{{route('mangas.destroy', $manga)}}" method="post">
+            @method('delete')
+            @csrf
+            <button type="submit" class="btn-link btn-lg mb-2" onclick="return confirm('Are you sure you want to delete this manga?')">Delete</button>
+            </form>
             <div class="my-6 p-6 bg-white border-b border-gray-200 shadow-sm sm:rounded-lg">
                 <h2 class="font-bold text-2x1">
                         {{ $manga->title }}
