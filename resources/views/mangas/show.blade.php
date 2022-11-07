@@ -11,24 +11,27 @@
 
     <div class="py-12">
         <div class="max-w-7x1 mx-auto sm:px-6 lg:px-8">
-            <a href="{{ route('mangas.edit', $manga) }}" class="btn-link btn-lg mb-2">Edit</a>
-            <form action="{{route('mangas.destroy', $manga)}}" method="post">
-            @method('delete')
-            @csrf
-            <button type="submit" class="btn-link btn-lg mb-2" onclick="return confirm('Are you sure you want to delete this manga?')">Delete</button>
-            </form>
+            
             <div class="my-6 p-6 bg-white border-b border-gray-200 shadow-sm sm:rounded-lg">
-                <h2 class="font-bold text-2x1">
+                <h1 class="font-bold text-lg">
                         {{ $manga->title }}
-                    </h2>
-                    <p class="author">Author: {{ $manga->author }} Chapter Count: {{ $manga->chapters }}</p>
+                    </h1>
+                    <p class="author italic font-sm">Author: {{ $manga->author }} Chapter Count: {{ $manga->chapters }}</p>
                     <img src="{{ asset('storage/images/' . $manga->manga_image) }}" width="400">
                     <p class="description">
                         {{ Str::limit($manga->description, 400) }}
                     </p>
-                    <p>{{ $manga->genre }}</p>
+                    <br>
+                    <p class="font-bold">Genre: {{ $manga->genre }}</p>
                     <span class="block mt-4 text-sm opacity-70">Updated: {{ $manga->updated_at->diffForHumans()}}</span>
                 </div> 
+
+            <a href="{{ route('mangas.edit', $manga) }}" class="btn-link btn-lg mb-2">Edit</a>
+            <form action="{{route('mangas.destroy', $manga)}}" method="post">
+            @method('delete')
+            @csrf
+            <button type="submit" class="btn-danger btn-lg mb-2" onclick="return confirm('Are you sure you want to delete this manga?')">Delete</button>
+            </form>
         </div>
     </div>
 </x-app-layout>

@@ -10,4 +10,13 @@ class Manga extends Model
     use HasFactory;
 
     protected $guarded = [];
+
+    protected $fillable = [
+        'title',
+        'description',
+        'author',
+        'genre',
+        'chapters',
+        'manga_image'
+    ];
 }
