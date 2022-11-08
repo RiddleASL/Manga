@@ -13,7 +13,7 @@
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-nav-link :href="route('mangas.index')" :active="request()->routeIs('dashboard')">
-                        {{ __('Manags') }}
+                        {{ __('Mangas') }}
                     </x-nav-link>
                 </div>
             </div>

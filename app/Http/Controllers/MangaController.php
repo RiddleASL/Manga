@@ -18,7 +18,9 @@ class MangaController extends Controller
      */
     public function index()
     {
-        //
+        // Grabbing all the information from the database using the id of the authenticated user who is currently logged in as a foreign key,
+        // attempting to grab all mangas for that user (if any), Ordered by the most recently updated and only displaying 5 per page.
+        // Returning the manga.index sends us to the webpage with the information we just pulled
         $mangas = Manga::where('user_id', Auth::id())->latest('updated_at')->paginate(5);
         return view('mangas.index')->with('mangas', $mangas);
     }
@@ -30,7 +32,7 @@ class MangaController extends Controller
      */
     public function create()
     {
-        //
+        // Link to the create page
         return view('mangas.create');
     }
 
@@ -42,7 +44,7 @@ class MangaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // Using validate allows us to set requirments that must be met for each field we wish to fill within the database.
         $request->validate([
             'title'=>'required|max:120',
             'description'=>'required',
@@ -55,12 +57,17 @@ class MangaController extends Controller
             'manga_image'=> 'file|image'
         ]);
 
+        // Creating a new unique image file name allows errors from occuring with imaged having the same name
+        // Pulling the image and the extension is uses (png, jpg, ect.) then using the date and time to create a unique name
         $manga_image = $request->file('manga_image');
         $extension = $manga_image->getClientOriginalExtension();
         $filename = date("Y-m-d-His") . '_' . $request->input('title') . '.' . $extension;
 
+        // Saving the image in the images folder within the public folder we linked previously with the storage folder using "php artisan storage:link"
         $path = $manga_image->storeAs('public/images', $filename);
 
+        // Finally, once validated and image file name was created, all information is pushed through here to get uploaded into the database
+        // creating a new row of information
         Manga::create([
             'title' => $request->title,
             'author'=>$request->author,
@@ -72,6 +79,7 @@ class MangaController extends Controller
             'user_id' => Auth::id()
         ]);
 
+        // Once new item is made, send user back to index page
         return to_route('mangas.index');
     }
 
@@ -83,7 +91,7 @@ class MangaController extends Controller
      */
     public function show(Manga $manga)
     {
-        //
+        // From the index page, Send user to a page and display the manga the user clicked on
         return view('mangas.show')->with('manga', $manga);
     }
 
@@ -95,7 +103,7 @@ class MangaController extends Controller
      */
     public function edit(Manga $manga)
     {
-        //
+        // From the show page, Send user to the edit page and bring the information from that manga with it
         return view('mangas.edit')->with('manga', $manga);
     }
 
@@ -108,8 +116,9 @@ class MangaController extends Controller
      */
     public function update(Request $request, Manga $manga)
     {
-        //
-        //
+        // Very similar to the create function
+        
+        // Using validate allows us to set requirments that must be met for each field we wish to fill within the database.        
         $request->validate([
             'title'=>'required|max:120',
             'description'=>'required',
@@ -119,10 +128,18 @@ class MangaController extends Controller
             'manga_image'=> 'file|image'
         ]);
 
+        // Running into errors at home when doing this section i decided to try another method i reserached
+
+        // First pulling the image file but not doing anything till later in the code
         $manga_image = $request->file('manga_image');
 
+        // Creating a new array ith all the information from the database, filtering by the id of the manga we pulled in from the edit page
         $manga = Manga::find($manga->id);
         
+        // Similar to the Create, this sets the field you wish to change then lets you change its value
+        // For manga image, using an if statement allows me to check if the user had uploaded a new image that they wish to use to update
+        // If they had left the file input empty, the image of that row in the database will remain the same
+        // If an image file had been uploaded, creating a unique file name then saving within the public images folder before updateing the database
         $manga->title = $request->input('title');
         $manga->description = $request->input('description');
         $manga->author = $request->input('author');
@@ -140,6 +157,7 @@ class MangaController extends Controller
 
         $manga->save();
 
+        // Once updated, send user to the show page for the manga they had just updated
         return to_route('mangas.show', $manga->id)->with('success', 'Book updated successfully');
     }
 
@@ -152,14 +170,8 @@ class MangaController extends Controller
     public function destroy(Manga $manga)
     {
         //
+        // With the information pulled in from the show page, within the database, delete that manga and head back to index page
         $manga->delete();
         return to_route('mangas.index');
-    }
-
-    public function search($search){
-        $mangas = DB::table('mangas')
-        ->select('mangas.*')
-        ->where('title', 'like', '%' . $search . '%');
-        return view('mangas.index')->with('mangas', $mangas);
     }
 }

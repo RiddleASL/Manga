@@ -19,11 +19,11 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', function () {
-    return view('dashboard');
+    return view('mangas');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-
-Route::get('/mangas/search', [MangaController::class, 'search']);
+//Instead of creating a new route::get for every function of the MangaController, we use the Route::resource to automatically create it
+//Using the middleware to authenticate that the user is viewing what they are allowed to. If not authenticated, user is brought back to login page
 Route::resource('/mangas', MangaController::class)->middleware(['auth']);
 
 require __DIR__.'/auth.php';

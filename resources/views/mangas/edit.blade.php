@@ -5,6 +5,9 @@
         </h2>
     </x-slot>
 
+    {{-- Similar to the create, everything below create a form that pulls in the info from the database into the respected field, knowing so
+        through the variable we pushed in the previous page (show). Once all fields are filled, it goes through the resrouce controller,
+        check if all required fields are met and updates the information within the database --}}
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="my-6 p-6 bg-white border-b border-gray-200 shadow-sm sm:rounded-lg">

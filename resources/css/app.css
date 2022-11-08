@@ -2,6 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Styling for buttons were created here using tailwind css */
 @layer components{
     .btn-link{
         @apply inline-block px-4 py-2 bg-indigo-700 rounded-md font-bold text-sm text-white uppercase tracking-widest hover:bg-indigo-800 
