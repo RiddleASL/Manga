@@ -1,6 +1,8 @@
 <?php
 
-use App\Http\Controllers\MangaController;
+use App\Http\Controllers\Admin\MangaController as AdminMangaController;
+use App\Http\Controllers\User\MangaController as UserMangaController;
+
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -24,6 +26,10 @@ Route::get('/dashboard', function () {
 
 //Instead of creating a new route::get for every function of the MangaController, we use the Route::resource to automatically create it
 //Using the middleware to authenticate that the user is viewing what they are allowed to. If not authenticated, user is brought back to login page
-Route::resource('/mangas', MangaController::class)->middleware(['auth']);
 
 require __DIR__.'/auth.php';
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home.index');
+
+Route::resource('/admin/mangas', AdminMangaController::class)->middleware(['auth'])->names('admin.books');
+Route::resource('/user/mangas', UserMangaController::class)->middleware(['auth'])->names('user.books')->only(['index', 'show']);

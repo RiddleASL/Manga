@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Models\Manga;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -18,11 +19,14 @@ class MangaController extends Controller
      */
     public function index()
     {
+        $user = Auth::user();
+        $user->authorizeRoles('admin');
+
         // Grabbing all the information from the database using the id of the authenticated user who is currently logged in as a foreign key,
         // attempting to grab all mangas for that user (if any), Ordered by the most recently updated and only displaying 5 per page.
         // Returning the manga.index sends us to the webpage with the information we just pulled
-        $mangas = Manga::where('user_id', Auth::id())->latest('updated_at')->paginate(5);
-        return view('mangas.index')->with('mangas', $mangas);
+        $mangas = Manga::paginate(5);
+        return view('admin.mangas.index')->with('mangas', $mangas);
     }
 
     /**
@@ -32,8 +36,11 @@ class MangaController extends Controller
      */
     public function create()
     {
+        $user = Auth::user();
+        $user->authorizeRoles('admin');
+
         // Link to the create page
-        return view('mangas.create');
+        return view('admin.mangas.create');
     }
 
     /**
@@ -80,7 +87,7 @@ class MangaController extends Controller
         ]);
 
         // Once new item is made, send user back to index page
-        return to_route('mangas.index');
+        return to_route('admin.mangas.index');
     }
 
     /**
@@ -92,7 +99,7 @@ class MangaController extends Controller
     public function show(Manga $manga)
     {
         // From the index page, Send user to a page and display the manga the user clicked on
-        return view('mangas.show')->with('manga', $manga);
+        return view('admin.mangas.show')->with('manga', $manga);
     }
 
     /**
@@ -104,7 +111,7 @@ class MangaController extends Controller
     public function edit(Manga $manga)
     {
         // From the show page, Send user to the edit page and bring the information from that manga with it
-        return view('mangas.edit')->with('manga', $manga);
+        return view('admin.mangas.edit')->with('manga', $manga);
     }
 
     /**
@@ -158,7 +165,7 @@ class MangaController extends Controller
         $manga->save();
 
         // Once updated, send user to the show page for the manga they had just updated
-        return to_route('mangas.show', $manga->id)->with('success', 'Book updated successfully');
+        return to_route('admin.mangas.show', $manga->id)->with('success', 'Book updated successfully');
     }
 
     /**
@@ -172,6 +179,6 @@ class MangaController extends Controller
         //
         // With the information pulled in from the show page, within the database, delete that manga and head back to index page
         $manga->delete();
-        return to_route('mangas.index');
+        return to_route('admin.mangas.index');
     }
 }
