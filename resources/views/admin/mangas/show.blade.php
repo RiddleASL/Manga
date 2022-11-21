@@ -28,8 +28,8 @@
 
                 {{-- Below, Buttons for the Edit and Delete funtions are set up to call within the resource controller
                     Delete button comes up with a prompt before, confirming the user wishes to delete (error prevention) --}}
-            <a href="{{ route('mangas.edit', $manga) }}" class="btn-link btn-lg mb-2">Edit</a>
-            <form action="{{route('mangas.destroy', $manga)}}" method="post">
+            <a href="{{ route('admin.mangas.edit', $manga) }}" class="btn-link btn-lg mb-2">Edit</a>
+            <form action="{{route('admin.mangas.destroy', $manga)}}" method="post">
             @method('delete')
             @csrf
             <button type="submit" class="btn-danger btn-lg mb-2" onclick="return confirm('Are you sure you want to delete this manga?')">Delete</button>

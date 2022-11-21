@@ -31,5 +31,5 @@ require __DIR__.'/auth.php';
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home.index');
 
-Route::resource('/admin/mangas', AdminMangaController::class)->middleware(['auth'])->names('admin.books');
-Route::resource('/user/mangas', UserMangaController::class)->middleware(['auth'])->names('user.books')->only(['index', 'show']);
+Route::resource('/admin/mangas', AdminMangaController::class)->middleware(['auth'])->names('admin.mangas');
+Route::resource('/user/mangas', UserMangaController::class)->middleware(['auth'])->names('user.mangas')->only(['index', 'show']);   

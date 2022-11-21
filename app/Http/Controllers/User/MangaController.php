@@ -23,7 +23,7 @@ class MangaController extends Controller
         // attempting to grab all mangas for that user (if any), Ordered by the most recently updated and only displaying 5 per page.
         // Returning the manga.index sends us to the webpage with the information we just pulled
         $mangas = Manga::where('user_id', Auth::id())->latest('updated_at')->paginate(5);
-        return view('mangas.index')->with('mangas', $mangas);
+        return view('user.mangas.index')->with('mangas', $mangas);
     }
 
     /**
@@ -34,7 +34,7 @@ class MangaController extends Controller
     public function create()
     {
         // Link to the create page
-        return view('mangas.create');
+        return view('user.mangas.create');
     }
 
     /**
@@ -81,7 +81,7 @@ class MangaController extends Controller
         ]);
 
         // Once new item is made, send user back to index page
-        return to_route('mangas.index');
+        return to_route('user.mangas.index');
     }
 
     /**
@@ -93,7 +93,7 @@ class MangaController extends Controller
     public function show(Manga $manga)
     {
         // From the index page, Send user to a page and display the manga the user clicked on
-        return view('mangas.show')->with('manga', $manga);
+        return view('user.mangas.show')->with('manga', $manga);
     }
 
     /**
@@ -105,7 +105,7 @@ class MangaController extends Controller
     public function edit(Manga $manga)
     {
         // From the show page, Send user to the edit page and bring the information from that manga with it
-        return view('mangas.edit')->with('manga', $manga);
+        return view('user.mangas.edit')->with('manga', $manga);
     }
 
     /**
@@ -159,7 +159,7 @@ class MangaController extends Controller
         $manga->save();
 
         // Once updated, send user to the show page for the manga they had just updated
-        return to_route('mangas.show', $manga->id)->with('success', 'Book updated successfully');
+        return to_route('user.mangas.show', $manga->id)->with('success', 'Book updated successfully');
     }
 
     /**
@@ -173,6 +173,6 @@ class MangaController extends Controller
         //
         // With the information pulled in from the show page, within the database, delete that manga and head back to index page
         $manga->delete();
-        return to_route('mangas.index');
+        return to_route('user.mangas.index');
     }
 }
