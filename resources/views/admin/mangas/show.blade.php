@@ -19,7 +19,7 @@
                     <p class="author italic font-sm">Author: {{ $manga->author }} Chapter Count: {{ $manga->chapters }}</p>
                     <img src="{{ asset('storage/images/' . $manga->manga_image) }}" width="400">
                     <p class="description">
-                        {{ Str::limit($manga->description, 400) }}
+                        {{$manga->description}}
                     </p>
                     <br>
                     <p class="font-bold">Genre: {{ $manga->genre }}</p>

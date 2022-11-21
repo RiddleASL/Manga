@@ -23,7 +23,7 @@
                         {{ Str::limit($manga->description, 400) }}
                     </p>    
                     <p>{{ $manga->genre }}</p>
-                    <span class="block mt-4 text-sm opacity-70">Updated: {{ $manga->updated_at->diffForHumans()}}</span>
+                    <span class="block mt-4 text-sm opacity-70">Updated: {{ \Carbon\Carbon::parse($manga->updated_at)->diffForHumans()}}</span>
                 </div>
             @empty
                 <p>You have no notes yet</p>

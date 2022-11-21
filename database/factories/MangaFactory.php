@@ -37,7 +37,7 @@ class MangaFactory extends Factory
             'manga_image' => '2022-11-07-060001_Kobold Adventured.jpg',
             'created_at' => date("Y-m-d H:i:s"),
             'updated_at' => date("Y-m-d H:i:s"),
-            'user_id' => 1
+            'user_id' => 3
         ];
     }
 }

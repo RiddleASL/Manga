@@ -15,7 +15,7 @@
                     @endif
 
                     You are logged in as an Admin user!
-                    <a href="{{ route('admin.books.index')}}"> View All Books</a>
+                    <a href="{{ route('admin.mangas.index')}}"> View All Books</a>
                 </div>
             </div>
         </div>

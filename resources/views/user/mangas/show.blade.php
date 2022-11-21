@@ -19,7 +19,7 @@
                     <p class="author italic font-sm">Author: {{ $manga->author }} Chapter Count: {{ $manga->chapters }}</p>
                     <img src="{{ asset('storage/images/' . $manga->manga_image) }}" width="400">
                     <p class="description">
-                        {{ Str::limit($manga->description, 400) }}
+                        {{ $manga->description}}
                     </p>
                     <br>
                     <p class="font-bold">Genre: {{ $manga->genre }}</p>
@@ -28,12 +28,8 @@
 
                 {{-- Below, Buttons for the Edit and Delete funtions are set up to call within the resource controller
                     Delete button comes up with a prompt before, confirming the user wishes to delete (error prevention) --}}
-            <a href="{{ route('mangas.edit', $manga) }}" class="btn-link btn-lg mb-2">Edit</a>
-            <form action="{{route('mangas.destroy', $manga)}}" method="post">
-            @method('delete')
-            @csrf
-            <button type="submit" class="btn-danger btn-lg mb-2" onclick="return confirm('Are you sure you want to delete this manga?')">Delete</button>
-            </form>
+            
+            
         </div>
     </div>
 </x-app-layout>
