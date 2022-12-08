@@ -22,15 +22,6 @@
                         :value="@old('title')"></x-text-input>
 
                     <x-text-input
-                        type="text"
-                        name="author"
-                        field="author"
-                        placeholder="Author"
-                        class="w-full"
-                        autocomplete="off"
-                        :value="@old('author')"></x-text-input>
-
-                    <x-text-input
                         type="datetime-local"
                         name="created_at"
                         field="created_at"
@@ -78,6 +69,13 @@
                             </option>
                         @endforeach
                     </select>
+
+                    <br>
+                    <label for="author">Author</label>
+                        @foreach ($authors as $author)
+                            <input type="checkbox" name="authors[]" value="{{ $author->id }}">
+                            {{ $author->name }}
+                        @endforeach
                     
                     <br>
                     <x-primary-button class="mt-6">Save Manga</x-primary-button>

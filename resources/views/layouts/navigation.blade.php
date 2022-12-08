@@ -19,7 +19,13 @@
 
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-nav-link :href="route('home.publishers.index')" :active="request()->routeIs('dashboard')">
-                        {{ __('Publisher') }}
+                        {{ __('Publishers') }}
+                    </x-nav-link>
+                </div>
+
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link :href="route('home.authors.index')" :active="request()->routeIs('dashboard')">
+                        {{ __('Authors') }}
                     </x-nav-link>
                 </div>
             </div>

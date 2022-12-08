@@ -25,7 +25,6 @@ class MangaFactory extends Factory
 
         return [
             'title' => Str::random(15),
-            'author' => Str::random(5) . " " . Str::random(7),
             'genre' => $genres[1],
             'chapters' => random_int(1,30),
             'description' => ' Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis ornare a nisl id placerat. In pretium metus ut nisl ullamcorper elementum. Sed egestas sit amet erat sit amet bibendum. Nunc commodo vel libero quis porttitor. Donec in lacus justo. Praesent posuere condimentum justo, ac eleifend urna varius a. Proin sed lacinia lectus.

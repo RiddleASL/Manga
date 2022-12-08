@@ -22,7 +22,15 @@
                     <h2 class="font-bold text-2x1">
                         <a href="{{ route('admin.mangas.show', $manga->id)}}" class="">{{ $manga->title }}</a>
                     </h2>
-                    <p class="author">Author: {{ $manga->author }} Chapter Count: {{ $manga->chapters }}</p>
+                    <p class="author">
+                        @foreach ($manga->authors as $author)
+                            <tr>
+                                <td><strong>Author:</strong> </td>
+                                <a href="{{ route('admin.authors.show', $author)}}" > {{ $author->name }}</a>,
+                            </tr>
+                        @endforeach
+                    </p>
+                    <p>Chapter Count: {{ $manga->chapters }}</p>
                     <p class="publisher">Publisher: {{ $manga->publisher->name }}</p>
                     <img src="{{ asset('storage/images/' . $manga->manga_image) }}" width="400">
                     <p class="description">
@@ -40,7 +48,7 @@
             @empty
                 <p>You have no notes yet</p>
             @endforelse
-            
+            {{ $mangas->links() }}
         </div>
     </div>
 </x-app-layout>

@@ -23,7 +23,7 @@ class MangaController extends Controller
         // attempting to grab all mangas for that user (if any), Ordered by the most recently updated and only displaying 5 per page.
         // Returning the manga.index sends us to the webpage with the information we just pulled
         // $mangas = DB::table('mangas')->latest('updated_at')->paginate(5);
-        $mangas = Manga::with('publisher')->get();
+        $mangas = Manga::with('publisher')->with('authors')->get();
         return view('user.mangas.index')->with('mangas', $mangas);
     }
 

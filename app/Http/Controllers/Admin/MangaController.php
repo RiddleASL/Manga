@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Manga;
 use App\Models\Publisher;
+use App\Models\Author;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -26,8 +27,9 @@ class MangaController extends Controller
         // Grabbing all the information from the database using the id of the authenticated user who is currently logged in as a foreign key,
         // attempting to grab all mangas for that user (if any), Ordered by the most recently updated and only displaying 5 per page.
         // Returning the manga.index sends us to the webpage with the information we just pulled
-        // $mangas = Manga::paginate(5);
+        
         $mangas = Manga::with('publisher')->get();
+        $mangas = Manga::paginate(5);
         return view('admin.mangas.index')->with('mangas', $mangas);
     }
 
@@ -43,7 +45,8 @@ class MangaController extends Controller
 
         // Link to the create page
         $publishers = Publisher::all();
-        return view('admin.mangas.create')->with('publishers',$publishers);
+        $authors = Author::all();
+        return view('admin.mangas.create')->with('publishers',$publishers)->with('authors',$authors);
     }
 
     /**
@@ -58,13 +61,13 @@ class MangaController extends Controller
         $request->validate([
             'title'=>'required|max:120',
             'description'=>'required',
-            'author'=>'required',
             'created_at'=>'required',
             'updated_at'=>'nullable',
             'genre' => 'required',
             'chapters' => 'required',
             'user_id'=> 'nullable',
             'publisher_id'=> 'required',
+            'authors' => ['required', 'exists:authors,id'],
             'manga_image'=> 'file|image'
         ]);
 
@@ -79,9 +82,8 @@ class MangaController extends Controller
 
         // Finally, once validated and image file name was created, all information is pushed through here to get uploaded into the database
         // creating a new row of information
-        Manga::create([
+        $manga = Manga::create([
             'title' => $request->title,
-            'author'=>$request->author,
             'description' => $request->description,
             'created_at'=> $request->created_at,
             'genre' => $request->genre,
@@ -90,6 +92,8 @@ class MangaController extends Controller
             'user_id' => Auth::id(),
             'publisher_id'=> $request->publisher_id
         ]);
+
+        $manga->authors()->attach($request->authors);
 
         // Once new item is made, send user back to index page
         return to_route('admin.mangas.index');

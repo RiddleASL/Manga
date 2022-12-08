@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Publisher;
+use App\Models\Author;
 
 class Manga extends Model
 {
@@ -14,5 +15,8 @@ class Manga extends Model
 
     public function publisher(){
         return $this->belongsTo(Publisher::class);
+    }
+    public function authors(){
+        return $this->belongsToMany(Author::class)->withTimestamps();
     }
 }

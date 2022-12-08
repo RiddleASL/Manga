@@ -12,7 +12,7 @@
     <div class="py-12">
         <div class="my-6 p-6 bg-white border-b border-gray-200 shadow-sm sm:rounded-lg">
             <h2 class="font-bold text-2x1">
-                <a href="{{ route('user.publishers.show', $publisher)}}"><strong>Publisher ID</strong> {{ $publisher->id }} </a>
+                <p><strong>Publisher ID</strong> {{ $publisher->id }} </p>
                 </h2>
                 <p class="mt-2">
                     <h3><strong>Publisher Name</strong> {{ $publisher->name }}</h3>
