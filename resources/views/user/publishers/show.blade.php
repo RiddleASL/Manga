@@ -1,35 +1,26 @@
 <x-app-layout>
     <link rel="stylesheet" href="css/main.css">
+
     <x-slot name="header">
         <div class="tit">
             <h1 class="font-semibold text-x1 text-gray-800 leading-tight title">
-                {{ ('Mangas') }}
+                {{ ('View Publisher') }}
             </h1>
         </div>
     </x-slot>
 
     <div class="py-12">
-        <div class="max-w-7x1 mx-auto sm:px-6 lg:px-8">
-            {{-- Below here, everything is pulled in from the database and displayed in its relavant area. Deciding what to pull in based on the
-                Manga pressed in the previous page (index) --}}
+            {{-- Creating a forelse loop with all the database information pulled in through the resource controller manga.index function.
+                Displaying it one by one in the layout we create below --}}
             <div class="my-6 p-6 bg-white border-b border-gray-200 shadow-sm sm:rounded-lg">
-                <h1 class="font-bold text-lg">
-                        {{ $manga->title }}
-                    </h1>
-                    <p class="author italic font-sm">Author: {{ $manga->author }} Chapter Count: {{ $manga->chapters }}</p>
-                    <img src="{{ asset('storage/images/' . $manga->manga_image) }}" width="400">
-                    <p class="description">
-                        {{ $manga->description}}
-                    </p>
-                    <br>
-                    <p class="font-bold">Genre: {{ $manga->genre }}</p>
-                    <span class="block mt-4 text-sm opacity-70">Updated: {{ $manga->updated_at->diffForHumans()}}</span>
-                </div> 
-
-                {{-- Below, Buttons for the Edit and Delete funtions are set up to call within the resource controller
-                    Delete button comes up with a prompt before, confirming the user wishes to delete (error prevention) --}}
-            
-            
+                <h2 class="font-bold text-2x1">
+                    <a href="{{ route('user.publishers.show', $publisher)}}"><strong>Publisher ID</strong> {{ $publisher->id }} </a>
+                </h2>
+                <p class="mt-2">
+                    <h3><strong>Publisher Name</strong> {{ $publisher->name }}</h3>
+                    <h3><strong>Publisher Address</strong> {{ $publisher->Address }}</h3>
+                </p>
+            </div>
         </div>
     </div>
 </x-app-layout>

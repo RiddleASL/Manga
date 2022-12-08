@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\User;
 
+use App\Models\Publisher;
+
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
@@ -14,7 +16,8 @@ class PublishController extends Controller
      */
     public function index()
     {
-        //
+        $publishers = Publisher::all();
+        return view('user.publishers.index')->with('publishers', $publishers);
     }
 
     /**
@@ -44,9 +47,9 @@ class PublishController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Publisher $publisher)
     {
-        //
+        return view('user.publishers.show')->with('publisher', $publisher);
     }
 
     /**
