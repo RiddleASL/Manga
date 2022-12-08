@@ -22,7 +22,8 @@ class MangaController extends Controller
         // Grabbing all the information from the database using the id of the authenticated user who is currently logged in as a foreign key,
         // attempting to grab all mangas for that user (if any), Ordered by the most recently updated and only displaying 5 per page.
         // Returning the manga.index sends us to the webpage with the information we just pulled
-        $mangas = DB::table('mangas')->latest('updated_at')->paginate(5);
+        // $mangas = DB::table('mangas')->latest('updated_at')->paginate(5);
+        $mangas = Manga::with('publisher')->get();
         return view('user.mangas.index')->with('mangas', $mangas);
     }
 
@@ -55,6 +56,7 @@ class MangaController extends Controller
             'genre' => 'required',
             'chapters' => 'required',
             'user_id'=> 'nullable',
+            'publisher_id'=> 'required',
             'manga_image'=> 'file|image'
         ]);
 
@@ -77,7 +79,8 @@ class MangaController extends Controller
             'genre' => $request->genre,
             'chapters' => $request->chapters,
             'manga_image' => $filename,
-            'user_id' => Auth::id()
+            'user_id' => Auth::id(),
+            'publisher_id'=> $request->publisher_id
         ]);
 
         // Once new item is made, send user back to index page

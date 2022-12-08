@@ -3,6 +3,9 @@
 use App\Http\Controllers\Admin\MangaController as AdminMangaController;
 use App\Http\Controllers\User\MangaController as UserMangaController;
 
+use App\Http\Controllers\Admin\PublishController as AdminPublisherController;
+use App\Http\Controllers\User\PublishController as UserPublisherController;
+
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -30,6 +33,10 @@ Route::get('/dashboard', function () {
 require __DIR__.'/auth.php';
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home.index');
+Route::get('/home/publishers', [App\Http\Controllers\HomeController::class, 'publisherIndex'])->name('home.publishers.index');
 
 Route::resource('/admin/mangas', AdminMangaController::class)->middleware(['auth'])->names('admin.mangas');
-Route::resource('/user/mangas', UserMangaController::class)->middleware(['auth'])->names('user.mangas')->only(['index', 'show']);   
+Route::resource('/user/mangas', UserMangaController::class)->middleware(['auth'])->names('user.mangas')->only(['index', 'show']);
+
+Route::resource('/admin/publishers', AdminPublisherController::class)->middleware(['auth'])->names('admin.publishers');
+Route::resource('/user/publishers', UserPublisherController::class)->middleware(['auth'])->names('user.publishers')->only(['index', 'show']);

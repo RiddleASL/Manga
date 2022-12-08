@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Notes') }}
+            {{ __('Mangas') }}
         </h2>
     </x-slot>
     {{-- Everything below create a form allowing for the user input relivant info into the respected fields aswell as upload an image
@@ -34,13 +34,14 @@
                         type="datetime-local"
                         name="created_at"
                         field="created_at"
+                        placeholder="Created At"
                         class="w-full"
                         autocomplete="off"
                         :value="@old('created_at')"></x-text-input>
 
                     <select name="genre" id="genre" field="genre" >
                         <option value="">Select Genre</option>
-                        <option value="sof">Slice Of Life</option>
+                        <option value="sol">Slice Of Life</option>
                         <option value="shounen">Shounen</option>
                         <option value="horror">Horror</option>
                         </select>
@@ -49,6 +50,7 @@
                         type="number"
                         name="chapters"
                         field="chapters"
+                        placeholder="Chapters"
                         class="w-full"
                         autocomplete="off"
                         :value="@old('chapters')"></x-text-input>
@@ -67,9 +69,18 @@
                         placeholder="Manga Image"
                         class="w-full mt-6"
                         field="manga_image"></x-text-input>
-                    
 
-                    <x-primary-button class="mt-6">Save Note</x-primary-button>
+                    <label for="publisher">Publisher</label>
+                    <select name="publisher_id">
+                        @foreach ($publishers as $publisher)
+                            <option value="{{ $publisher->id }}" {{ (old('publisher_id') == $publisher->id) ? "selected" : "" }}>
+                                {{ $publisher->name }}
+                            </option>
+                        @endforeach
+                    </select>
+                    
+                    <br>
+                    <x-primary-button class="mt-6">Save Manga</x-primary-button>
                 </form>
             </div>
         </div>

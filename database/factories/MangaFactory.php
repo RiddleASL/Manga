@@ -34,10 +34,10 @@ class MangaFactory extends Factory
             
             Donec tempor efficitur velit sit amet hendrerit. Nunc placerat quam non turpis consectetur, eget gravida nisi euismod. Vestibulum eget massa eu ex accumsan efficitur. Donec vel lacinia quam. In congue augue vitae aliquet tincidunt. Sed malesuada egestas imperdiet. Cras at quam gravida, rhoncus urna vel, feugiat enim. Pellentesque gravida, risus ut dignissim vulputate, ipsum eros consectetur augue, eget venenatis felis arcu non erat. Nam aliquam eros ut tortor lobortis, vel tincidunt sapien ornare. Aliquam quis sem ligula. Nam sed placerat urna, quis placerat dui. Aliquam vitae dapibus sapien. Sed eget mauris quis nulla volutpat malesuada nec non dolor. 
             ',
-            'manga_image' => '2022-11-07-060001_Kobold Adventured.jpg',
+            'manga_image' => '2022-12-05-220031_aslkdjasdlkj.png',
             'created_at' => date("Y-m-d H:i:s"),
             'updated_at' => date("Y-m-d H:i:s"),
-            'user_id' => 3
+            'user_id' => random_int(1,2),
         ];
     }
 }

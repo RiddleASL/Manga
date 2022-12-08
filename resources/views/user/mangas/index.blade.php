@@ -18,17 +18,23 @@
                         <a href="{{ route('user.mangas.show', $manga->id)}}" class="">{{ $manga->title }}</a>
                     </h2>
                     <p class="author">Author: {{ $manga->author }} Chapter Count: {{ $manga->chapters }}</p>
+                    <p class="publisher">Publisher: {{ $manga->publisher->name }}</p>
                     <img src="{{ asset('storage/images/' . $manga->manga_image) }}" width="400">
                     <p class="description">
                         {{ Str::limit($manga->description, 400) }}
                     </p>    
-                    <p>{{ $manga->genre }}</p>
+                    <p>Genre: <?php
+                        if($manga->genre == 'sol'){
+                            echo('Slice of Life');
+                        } else {
+                            echo(ucfirst($manga->genre));
+                        }
+                    ?></p>
                     <span class="block mt-4 text-sm opacity-70">Updated: {{ \Carbon\Carbon::parse($manga->updated_at)->diffForHumans()}}</span>
                 </div>
             @empty
                 <p>You have no notes yet</p>
             @endforelse
-            {{ $mangas->links() }}
         </div>
     </div>
 </x-app-layout>

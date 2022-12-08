@@ -17,32 +17,19 @@
                         {{ $manga->title }}
                     </h1>
                     <p class="author italic font-sm">Author: {{ $manga->author }} Chapter Count: {{ $manga->chapters }}</p>
-                    <p class="publisher italic font-sm">Publisher: {{ $manga->publisher->name }}</p>
                     <img src="{{ asset('storage/images/' . $manga->manga_image) }}" width="400">
                     <p class="description">
-                        {{$manga->description}}
+                        {{ $manga->description}}
                     </p>
                     <br>
-                    <p class="font-bold">Genre: 
-                        <?php
-                            if($manga->genre == 'sol'){
-                                echo('Slice of Life');
-                            } else {
-                                echo(ucfirst($manga->genre));
-                            }
-                        ?>
-                    </p>
+                    <p class="font-bold">Genre: {{ $manga->genre }}</p>
                     <span class="block mt-4 text-sm opacity-70">Updated: {{ $manga->updated_at->diffForHumans()}}</span>
                 </div> 
 
                 {{-- Below, Buttons for the Edit and Delete funtions are set up to call within the resource controller
                     Delete button comes up with a prompt before, confirming the user wishes to delete (error prevention) --}}
-            <a href="{{ route('admin.mangas.edit', $manga) }}" class="btn-link btn-lg mb-2">Edit</a>
-            <form action="{{route('admin.mangas.destroy', $manga)}}" method="post">
-            @method('delete')
-            @csrf
-            <button type="submit" class="btn-danger btn-lg mb-2" onclick="return confirm('Are you sure you want to delete this manga?')">Delete</button>
-            </form>
+            
+            
         </div>
     </div>
 </x-app-layout>
