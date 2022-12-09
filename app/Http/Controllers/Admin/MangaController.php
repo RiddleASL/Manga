@@ -119,8 +119,13 @@ class MangaController extends Controller
      */
     public function edit(Manga $manga)
     {
+        $user = Auth::user();
+        $user->authorizeRoles('admin');
         // From the show page, Send user to the edit page and bring the information from that manga with it
-        return view('admin.mangas.edit')->with('manga', $manga);
+        $publishers = Publisher::all();
+        $authors = Author::all();
+        $author_manga = DB::table('author_manga')->get();
+        return view('admin.mangas.edit')->with('manga', $manga)->with('publishers',$publishers)->with('authors',$authors)->with('author_manga',$author_manga);
     }
 
     /**
@@ -138,9 +143,12 @@ class MangaController extends Controller
         $request->validate([
             'title'=>'required|max:120',
             'description'=>'required',
-            'author'=>'required',
+            'updated_at'=>'nullable',
             'genre' => 'required',
             'chapters' => 'required',
+            'user_id'=> 'nullable',
+            'publisher_id'=> 'required',
+            'authors' => ['required', 'exists:authors,id'],
             'manga_image'=> 'file|image'
         ]);
 
@@ -158,10 +166,10 @@ class MangaController extends Controller
         // If an image file had been uploaded, creating a unique file name then saving within the public images folder before updateing the database
         $manga->title = $request->input('title');
         $manga->description = $request->input('description');
-        $manga->author = $request->input('author');
         $manga->updated_at = $request->input('updated_at');
         $manga->genre = $request->input('genre');
         $manga->chapters = $request->input('chapters');
+        $manga->publisher_id = $request->input('publisher_id');
         if($manga_image != null){
             $extension = $manga_image->getClientOriginalExtension();
             $filename = date("Y-m-d-His") . '_' . $request->input('title') . '.' . $extension;
@@ -172,6 +180,19 @@ class MangaController extends Controller
         }else{}
 
         $manga->save();
+
+        // $manga->authors()->attach($request->authors);
+
+        $author_manga = DB::table('author_manga')->get();
+
+        foreach ($author_manga as $authorCheck) {
+            if($authorCheck->manga_id == $manga->id){
+                DB::table('author_manga')->where('id',$authorCheck->id)->delete();
+            }
+        }
+
+        $manga->authors()->attach($request->authors);
+        
 
         // Once updated, send user to the show page for the manga they had just updated
         return to_route('admin.mangas.show', $manga->id)->with('success', 'Book updated successfully');

@@ -3,7 +3,7 @@
     <x-slot name="header">
         <div class="tit">
             <h1 class="font-semibold text-x1 text-gray-800 leading-tight title">
-                {{ 'Mangas' }}
+                {{ 'View Manga' }}
             </h1>
         </div>
     </x-slot>
